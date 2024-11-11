@@ -1,8 +1,6 @@
-# conversao-distancia
+# Distance Conversion
 
 This repository is forked from the original repository "Conversão de Distâncias" on GitHub: https://github.com/KubeDev/conversao-distancia. This challenge is part of the Cloud & DevOps Immersion program proposed by Fabricio Veronez in November 2024.
-
-# Distance Conversion
 
 This project is a simple application that performs the conversion of different distance units. The goal of this repository is to demonstrate the setup of an environment with Docker and the execution of an application in a container.
 
