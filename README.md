@@ -125,7 +125,7 @@ To deploy the application to a k3d Kubernetes cluster, follow these steps:
          spec:
            containers:
            - name: conversao-distancia
-             image: tadeuaugusto/conversao-distancia
+             image: your-username/conversao-distancia
              ports:
              - containerPort: 5000
      ---
@@ -163,6 +163,70 @@ To deploy the application to a k3d Kubernetes cluster, follow these steps:
      ```
      http://localhost:8080
      ```
+
+# Exploring Application Version Management on Kubernetes
+
+The scenario below demonstrates how to manage different versions of an application within a Kubernetes cluster. It includes updating the application, scaling replicas, and performing rollbacks.
+
+## Scenario: Managing Application Versions
+
+### Step 1: Update the Application
+First, we’ll update the `index.html` file of our application (you can add a "Version 2" in the h2 tag).
+After making the changes, build the Docker image and push it to the Docker registry:
+
+```bash
+docker build -t your-username/conversao-distancia:v2 --push .
+```
+
+### Step 2: Update the ReplicaSet
+Next, we will update the ReplicaSet to increase the number of replicas from 6 to 8 and change the deployment to use the new image version :v2. Use the following command:
+
+In the `deployment.yaml` file update the `replicas` value and add `:v2` to the image declaration as following:
+
+```bash
+replicas: 8
+...
+image: your-username/conversao-distancia:v2
+```
+
+After that run the command below on your terminal:
+
+```bash
+kubectl apply -f k8s/deployment.yaml && watch 'kubectl get pod'
+```
+
+### Step 3: Roll Back to Previous Version
+If you wish to revert the application back to version `:v1`, modify the manifest file to change the image back to `:v1`. Then, apply the changes:
+
+```bash
+kubectl apply -f k8s/deployment.yaml && watch 'kubectl get pod,deployment,replicaset'
+```
+
+### Step 4: Re-deploy the New Version
+If you want to switch back to version `:v2`, update the manifest file again and apply the changes:
+
+```bash
+kubectl apply -f k8s/deployment.yaml && watch 'kubectl get pod,deployment,replicaset'
+```
+
+## Alternative: Using Rollout Commands
+
+Instead of directly modifying the version in the manifest file, you can utilize the following Kubernetes CLI commands to manage the rollout history and perform rollbacks more efficiently:
+
+### View Rollout History: 
+This command shows the last two revisions of the deployment:
+
+```bash
+kubectl rollout history deployment conversao-distancia
+```
+
+### Rollback to Previous Version:
+If you need to revert to the last stable version, use the following command:
+
+```bash
+kubectl rollout undo deployment conversao-distancia && watch 'kubectl get pod'
+```
+
 
 ## Contributions
 
