@@ -61,7 +61,6 @@ The "Distance Conversion" application allows users to convert distances between 
    - In the terminal, run the following command to build the image:
      ```bash
      docker build -t conversao-distancia .
-     docker build -t <docker_hub_username>/conversao-distancia .
      ```
 
 2. **Running the Container**
