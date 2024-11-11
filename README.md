@@ -77,6 +77,32 @@ The "Distance Conversion" application allows users to convert distances between 
 
 After following the above steps, the application will be running, and you can interact with it through the web interface. Enter the values and desired units to perform the conversions.
 
+## Uploading to Docker Hub
+
+To upload your Docker image to Docker Hub, follow these steps:
+
+1. **Create a Docker Hub Account**
+   - If you don’t already have a Docker Hub account, sign up at [Docker Hub](https://hub.docker.com/).
+
+2. **Log in to Docker Hub**
+   - In your terminal, log in to your Docker Hub account:
+     ```bash
+     docker login
+     ```
+
+3. **Tag and Push the Docker Image**
+   - Before pushing the image, tag it with your Docker Hub username and repository name.
+   - Is a best practice to use an specific version instead of only 'latest' in order to avoid break changes in the future. So it is advisable to have both uploaded to the Docker Registry, the current version as well as the latest. 
+     ```bash
+     docker push your-username/conversao-distancia:v1
+     docker tag your-username/conversao-distancia:v1 tadeu/conversao-distancia:latest
+     docker push your-username/conversao-distancia:latest
+     ```
+
+4. **Verify the Upload**
+   - Go to your Docker Hub account and check if the image appears in your repositories.
+
+
 ## Technologies Used
 
 - Python
