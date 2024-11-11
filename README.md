@@ -106,16 +106,7 @@ To upload your Docker image to Docker Hub, follow these steps:
 
 To deploy the application to a k3d Kubernetes cluster, follow these steps:
 
-1. **Install k3d**
-   - If you haven't installed k3d yet, refer to the [k3d documentation](https://k3d.io/) for installation instructions.
-
-2. **Create a k3d Cluster**
-   - Create a new k3d cluster:
-     ```bash
-     k3d cluster create mycluster
-     ```
-
-3. **Apply the Deployment and Service Manifest**
+1. **Create the Kubernetes Manifest**
    - Create a file named `deployment.yaml` in a folder called `k8s` and paste the following manifest into it:
      ```yaml
      apiVersion: apps/v1
@@ -152,16 +143,25 @@ To deploy the application to a k3d Kubernetes cluster, follow these steps:
        type: NodePort
      ```
 
+2. **Install k3d**
+   - If you haven't installed k3d yet, refer to the [k3d documentation](https://k3d.io/) for installation instructions.
+
+3. **Create a k3d Cluster**
+   - This command sets up a k3d Kubernetes cluster named k8s-cluster with 1 server node and 2 agent nodes, and it configures port forwarding from the host machine (port 8080) to the cluster's load balancer (port 30000).:
+     ```bash
+     k3d cluster create k8s-cluster --servers 1 --agents 2 -p "8080:30000@loadbalancer"
+     ```
+
 4. **Deploy the Application**
    - Use `kubectl` to apply the manifest file:
      ```bash
      kubectl apply -f k8s/deployment.yaml
      ```
 
-5. **Access the Application**
+6. **Access the Application**
    - After deploying, you can access the application using the node port. Open your browser and go to:
      ```
-     http://localhost:30000
+     http://localhost:8080
      ```
 
 ## Contributions
