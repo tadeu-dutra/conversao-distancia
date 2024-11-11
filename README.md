@@ -116,7 +116,7 @@ To deploy the application to a k3d Kubernetes cluster, follow these steps:
      ```
 
 3. **Apply the Deployment and Service Manifest**
-   - Create a file named `deployment.yaml` and paste the following manifest into it:
+   - Create a file named `deployment.yaml` in a folder called `k8s` and paste the following manifest into it:
      ```yaml
      apiVersion: apps/v1
      kind: Deployment
@@ -155,7 +155,7 @@ To deploy the application to a k3d Kubernetes cluster, follow these steps:
 4. **Deploy the Application**
    - Use `kubectl` to apply the manifest file:
      ```bash
-     kubectl apply -f deployment.yaml
+     kubectl apply -f k8s/deployment.yaml
      ```
 
 5. **Access the Application**
