@@ -102,11 +102,67 @@ To upload your Docker image to Docker Hub, follow these steps:
    - Go to your Docker Hub account and check if the image appears in your repositories.
 
 
-## Technologies Used
+## Deploying to a k3d Kubernetes Cluster
 
-- Python
-- Flask
-- Docker
+To deploy the application to a k3d Kubernetes cluster, follow these steps:
+
+1. **Install k3d**
+   - If you haven't installed k3d yet, refer to the [k3d documentation](https://k3d.io/) for installation instructions.
+
+2. **Create a k3d Cluster**
+   - Create a new k3d cluster:
+     ```bash
+     k3d cluster create mycluster
+     ```
+
+3. **Apply the Deployment and Service Manifest**
+   - Create a file named `deployment.yaml` and paste the following manifest into it:
+     ```yaml
+     apiVersion: apps/v1
+     kind: Deployment
+     metadata:
+       name: conversao-distancia
+     spec:
+       replicas: 6
+       selector:
+         matchLabels:
+           app: conversao-distancia
+       template:
+         metadata:
+           labels:
+             app: conversao-distancia
+         spec:
+           containers:
+           - name: conversao-distancia
+             image: tadeuaugusto/conversao-distancia
+             ports:
+             - containerPort: 5000
+     ---
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: conversao-distancia
+     spec:
+       selector:
+         app: conversao-distancia
+       ports:
+       - port: 80
+         targetPort: 5000
+         nodePort: 30000
+       type: NodePort
+     ```
+
+4. **Deploy the Application**
+   - Use `kubectl` to apply the manifest file:
+     ```bash
+     kubectl apply -f deployment.yaml
+     ```
+
+5. **Access the Application**
+   - After deploying, you can access the application using the node port. Open your browser and go to:
+     ```
+     http://localhost:30000
+     ```
 
 ## Contributions
 
