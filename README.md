@@ -91,11 +91,17 @@ To upload your Docker image to Docker Hub, follow these steps:
 
 3. **Tag and Push the Docker Image**
    - Before pushing the image, tag it with your Docker Hub username and repository name.
-   - Is a best practice to use an specific version instead of only 'latest' in order to avoid break changes in the future. So it is advisable to have both uploaded to the Docker Registry, the current version as well as the latest. 
      ```bash
+     docker tag conversao-distancia your-username/conversao-distancia:v1
+     ```
+   - To push the image to Docker Hub, simply run:
+   ```bash
+     docker push your-username/conversao-distancia
+     ```
+     The previous command will build and push an image without any specific version, tagging it as `latest`.  It is a best practice to use an specific version instead of only 'latest' in order to avoid break changes in the future. So it is advisable to have both uploaded to the Docker Registry, the current version as well as the latest. To do this perform the commands below: 
+     ```bash
+     docker tag your-username/conversao-distancia:latest your-username/conversao-distancia:v1
      docker push your-username/conversao-distancia:v1
-     docker tag your-username/conversao-distancia:v1 tadeu/conversao-distancia:latest
-     docker push your-username/conversao-distancia:latest
      ```
 
 4. **Verify the Upload**
