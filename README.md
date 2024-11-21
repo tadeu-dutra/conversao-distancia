@@ -233,11 +233,3 @@ If you need to revert to the last stable version, use the following command:
 kubectl rollout undo deployment conversao-distancia && watch 'kubectl get pod'
 ```
 
-
-## Contributions
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
